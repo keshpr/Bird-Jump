@@ -899,9 +899,7 @@ void updateScore(player* pp)
    x.close();
 }
 
-/*Displays the screen with the names of the 
-students wwho made this project, along with
-their class and section */
+/*Displays a final Thank You */
 void credits()
 {
    int gd = DETECT , gm;
