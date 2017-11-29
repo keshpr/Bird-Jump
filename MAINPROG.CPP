@@ -387,7 +387,7 @@ void userId(player*);
 void setPlayer(player*);
 void move(Bird*, Bullet**, Bird**);
 void updateScore(player*);
-void gameOver(char*);
+void gameOver(char*, Bullet*);
 void runGame(Bird*,player*);
 void help();
 void leaderboard(player*);
@@ -638,9 +638,18 @@ void move(Bird* fp, Bullet** bullets)
 /*
 Displays message on screen when game is over
 */
-void gameOver(char* scpr)
+void gameOver(char* scpr, Bullet* bullets)
 {
    settextstyle(DEFAULT_FONT,0,2);
+   for (int i = 0; i<MAXBULLETS; i++)
+   {
+	   if (bullets[i] != NULL)
+	   {
+		   free(bullets[i]);
+		   bullets[i] = NULL;
+	   }
+
+   }
    outtextxy(100,100,"GAME OVER!!!");
    outtextxy(100,125,scpr);
    outtextxy(100,150,"Press any key to go to menu.");
@@ -693,7 +702,7 @@ void runGame(Bird* fp, player* pp)
 
 		  pp->score = score;
 		  updateScore(pp);
-		  gameOver(scpr);
+		  gameOver(scpr, bullets);
 		  getch();
 		  return;
 	       }
@@ -790,8 +799,9 @@ void runGame(Bird* fp, player* pp)
    }
    pp->score = score;
    fp->setBird();
-   gameOver(scpr);
+   gameOver(scpr, bullets);
    updateScore(pp);
+   
    getch();
    cleardevice();
 
@@ -899,7 +909,9 @@ void updateScore(player* pp)
    x.close();
 }
 
-/*Displays a final Thank You */
+/*Displays the screen with the names of the 
+students wwho made this project, along with
+their class and section */
 void credits()
 {
    int gd = DETECT , gm;
